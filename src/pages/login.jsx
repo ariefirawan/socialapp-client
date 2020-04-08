@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import withStyles from '@material-ui/core/styles/withStyles';
 
+import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -92,30 +92,6 @@ class Login extends Component {
               onChange={this.handleChange}
               fullWidth
             />
-            <TextField
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              label="confirmPassword"
-              className={classes.textField}
-              helperText={errors.password}
-              error={errors.confirmPassword ? true : false}
-              value={this.state.confirmPassword}
-              onChange={this.handleChange}
-              fullWidth
-            />
-            <TextField
-              id="handle"
-              name="handle"
-              type="text"
-              label="Handle"
-              className={classes.textField}
-              helperText={errors.handle}
-              error={errors.handle ? true : false}
-              value={this.state.handle}
-              onChange={this.handleChange}
-              fullWidth
-            />
             {errors.general && (
               <Typography variant="body2" className={classes.customError}>
                 {errors.general}
@@ -128,12 +104,12 @@ class Login extends Component {
               className={classes.button}
               disabled={loading}
             >
-              Signup
+              Login
               {loading && <CircularProgress size={30} className={classes.progress} />}
             </Button>
             <br />
             <small>
-              Already have an account ? <Link to="/signup">Login Here</Link>
+              Don't have an account ? <Link to="/signup">Signup Here</Link>
             </small>
           </form>
         </Grid>

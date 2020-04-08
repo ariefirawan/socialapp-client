@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import withStyles from '@material-ui/core/styles/withStyles';
 
+import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const styles = theme => ({
-  ...theme.spreadThis
-})
+const styles = (theme) => ({
+  ...theme.spreadThis,
+});
 
 class SignUp extends Component {
   constructor() {
@@ -22,40 +22,40 @@ class SignUp extends Component {
       confirmPassword: '',
       handle: '',
       loading: false,
-      errors: {}
+      errors: {},
     };
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({
-      loading: true
+      loading: true,
     });
     const newUserData = {
       email: this.state.email,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
-      handle: this.state.handle
+      handle: this.state.handle,
     };
     axios
       .post('/signup', newUserData)
-      .then(res => {
-        localStorage.setItem('IdToken', `Bearer ${res.data.token}`)
+      .then((res) => {
+        localStorage.setItem('IdToken', `Bearer ${res.data.token}`);
         this.setState({
-          loading: false
+          loading: false,
         });
         this.props.history.push('/');
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
           errors: err.response.data,
-          loading: false
+          loading: false,
         });
       });
   };
@@ -95,6 +95,30 @@ class SignUp extends Component {
               onChange={this.handleChange}
               fullWidth
             />
+            <TextField
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              label="confirmPassword"
+              className={classes.textField}
+              helperText={errors.password}
+              error={errors.confirmPassword ? true : false}
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+              fullWidth
+            />
+            <TextField
+              id="handle"
+              name="handle"
+              type="text"
+              label="Handle"
+              className={classes.textField}
+              helperText={errors.handle}
+              error={errors.handle ? true : false}
+              value={this.state.handle}
+              onChange={this.handleChange}
+              fullWidth
+            />
             {errors.general && (
               <Typography variant="body2" className={classes.customError}>
                 {errors.general}
@@ -108,11 +132,13 @@ class SignUp extends Component {
               disabled={loading}
             >
               Sign Up
-              {loading && <CircularProgress size={30} className={classes.progress} />}
+              {loading && (
+                <CircularProgress size={30} className={classes.progress} />
+              )}
             </Button>
             <br />
             <small>
-              Don't have an account ? <Link to="/signup">Sign up Here</Link>
+              Already have an account ? <Link to="/signup">Sign In Here</Link>
             </small>
           </form>
         </Grid>
