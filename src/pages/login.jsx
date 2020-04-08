@@ -1,40 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
 import withStyles from '@material-ui/core/styles/withStyles';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const styles = {
-  form: {
-    textAlign: 'center'
-  },
-  image: {
-    margin: '20px auto 20px auto'
-  },
-  pageTitle: {
-    margin: '10px auto 10px auto'
-  },
-  textField: {
-    margin: '10px auto 10px auto'
-  },
-  button: {
-    marginTop: 20,
-    position: 'relative'
-  },
-  customError: {
-    color: 'red',
-    fontSize: '0.8rem',
-    marginTop: 10
-  },
-  progress: {
-    position: 'absolute'
-  }
-};
+const styles = theme => ({
+  ...theme.spreadThis
+})
 
 class Login extends Component {
   constructor() {
@@ -54,6 +31,7 @@ class Login extends Component {
   };
 
   handleSubmit = event => {
+    event.preventDefault();
     this.setState({
       loading: true
     });
@@ -65,6 +43,7 @@ class Login extends Component {
       .post('/login', userData)
       .then(res => {
         console.log(res.data);
+        localStorage.setItem('IdToken', `Bearer ${res.data.token}`)
         this.setState({
           loading: false
         });
@@ -113,6 +92,30 @@ class Login extends Component {
               onChange={this.handleChange}
               fullWidth
             />
+            <TextField
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              label="confirmPassword"
+              className={classes.textField}
+              helperText={errors.password}
+              error={errors.confirmPassword ? true : false}
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+              fullWidth
+            />
+            <TextField
+              id="handle"
+              name="handle"
+              type="text"
+              label="Handle"
+              className={classes.textField}
+              helperText={errors.handle}
+              error={errors.handle ? true : false}
+              value={this.state.handle}
+              onChange={this.handleChange}
+              fullWidth
+            />
             {errors.general && (
               <Typography variant="body2" className={classes.customError}>
                 {errors.general}
@@ -125,12 +128,12 @@ class Login extends Component {
               className={classes.button}
               disabled={loading}
             >
-              Login
+              Signup
               {loading && <CircularProgress size={30} className={classes.progress} />}
             </Button>
-            <br />>
+            <br />
             <small>
-              Don't have an account ? <Link to="/signup">Sign up Here </Link>
+              Already have an account ? <Link to="/signup">Login Here</Link>
             </small>
           </form>
         </Grid>

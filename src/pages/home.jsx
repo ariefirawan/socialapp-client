@@ -10,7 +10,7 @@ class Home extends Component {
   };
   componentDidMount() {
     axios
-      .get('/screams')
+      ('/screams')
       .then((res) => {
         this.setState({ screams: res.data });
       })
@@ -25,7 +25,7 @@ class Home extends Component {
       <p>Loading..</p>
     );
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={10}>
         <Grid item sm={8} xs={12}>
           {recentScreamMarkUp}
         </Grid>

@@ -1,35 +1,33 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 import Home from './pages/home';
 import login from './pages/login';
-import signup from './pages/signup';
+import signUp from './pages/signup';
 
 import Navbar from './components/navbar';
+import AuthRoute from './util/AuthRoute'
 
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import themeFile from './util/theme';
 import './App.css';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#33c9dc',
-      main: '#00bcd4',
-      dark: '#008394',
-      contrastText: '#fff'
-    },
-    secondary: {
-      light: '#ff6333',
-      main: '#ff3d00',
-      dark: '#b22a00',
-      contrastText: '#fff'
-    }
-  },
-  typography: {
-    useNextVariants: true
+const theme = createMuiTheme(themeFile);
+
+const token = localStorage.IdToken;
+let authenticated;
+if (token) {
+  const decodeToken = jwtDecode(token);
+  console.log(decodeToken);
+  if (decodeToken.exp * 1000 < Date.now()) {
+    window.location.href = '/login';
+    authenticated = false;
+  } else {
+    authenticated = true;
   }
-});
+}
 
 class App extends Component {
   render() {
@@ -41,8 +39,16 @@ class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/login" component={login} />
-                <Route path="/signup" component={signup} />
+                <AuthRoute
+                  path="/login"
+                  component={login}
+                  authenticated={authenticated}
+                />
+                <AuthRoute
+                  path="/signup"
+                  component={signUp}
+                  authenticated={authenticated}
+                />
               </Switch>
             </div>
           </Router>
