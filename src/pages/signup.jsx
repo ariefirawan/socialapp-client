@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+
+import { signUpUser } from '../redux/actions/user.action';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -26,6 +28,12 @@ class SignUp extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -43,26 +51,12 @@ class SignUp extends Component {
       confirmPassword: this.state.confirmPassword,
       handle: this.state.handle,
     };
-    axios
-      .post('/signup', newUserData)
-      .then((res) => {
-        localStorage.setItem('IdToken', `Bearer ${res.data.token}`);
-        this.setState({
-          loading: false,
-        });
-        this.props.history.push('/');
-      })
-      .catch((err) => {
-        this.setState({
-          errors: err.response.data,
-          loading: false,
-        });
-      });
+    this.props.signUpUser(newUserData, this.props.history)
   };
 
   render() {
-    const { classes } = this.props;
-    const { errors, loading } = this.state;
+    const { classes, UI: {loading} } = this.props;
+    const { errors } = this.state;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -148,4 +142,12 @@ class SignUp extends Component {
   }
 }
 
-export default withStyles(styles)(SignUp);
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
+
+//signUpUser di pass langsung sebagai mapDispatchToProps wow baru tau gw!
+export default connect(mapStateToProps, { signUpUser })(
+  withStyles(styles)(SignUp)
+);
