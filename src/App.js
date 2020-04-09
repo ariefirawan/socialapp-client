@@ -12,7 +12,7 @@ import Navbar from './components/navbar';
 import AuthRoute from './util/AuthRoute'
 
 import store from './redux/store'
-import {SET_AUTHENTICATED} from './redux/types'
+// import {SET_AUTHENTICATED} from './redux/types'
 import {logOutUser, getUserData} from './redux/actions/user.action'
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
