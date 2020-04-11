@@ -12,7 +12,7 @@ import Navbar from './components/navbar';
 import AuthRoute from './util/AuthRoute'
 
 import store from './redux/store'
-// import {SET_AUTHENTICATED} from './redux/types'
+import {SET_AUTHENTICATED} from './redux/types'
 import {logOutUser, getUserData} from './redux/actions/user.action'
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
@@ -28,7 +28,7 @@ if (token) {
     store.dispatch(logOutUser())
     window.location.href = '/login';
   } else {
-    // store.dispatch({type: SET_AUTHENTICATED})
+    store.dispatch({type: SET_AUTHENTICATED})
     axios.defaults.headers.common['Authorization'] = token
     store.dispatch(getUserData())
   }

@@ -6,6 +6,9 @@ import dayjs from 'dayjs';
 
 import { logOutUser, imageUpload } from '../redux/actions/user.action';
 
+import EditDetails from './EditDetails';
+import MyButton from './ButtonIcon';
+
 import Typography from '@material-ui/core/Typography';
 import MuiLink from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -13,9 +16,8 @@ import Paper from '@material-ui/core/Paper';
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalenderToday from '@material-ui/icons/CalendarToday';
-import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 
 const styles = (theme) => ({
   paper: {
@@ -66,7 +68,6 @@ const styles = (theme) => ({
 });
 
 class Profile extends Component {
-
   handleImageChange = (event) => {
     const image = event.target.files[0];
     const formData = new FormData();
@@ -78,6 +79,10 @@ class Profile extends Component {
     const fileInput = document.getElementById('imageInput');
     fileInput.click();
   };
+
+  handleLogout = () => {
+    this.props.logOutUser();
+  };
   render() {
     const {
       classes,
@@ -88,7 +93,7 @@ class Profile extends Component {
       },
     } = this.props;
 
-    const profileMarkUp = !loading ? (
+    let profileMarkUp = !loading ? (
       authenticated ? (
         <Paper className={classes.paper}>
           <div className={classes.profile}>
@@ -100,14 +105,13 @@ class Profile extends Component {
                 hidden="hidden"
                 onChange={this.handleImageChange}
               />
-              <Tooltip title="Edit profile picture" placement="top">
-                <IconButton
-                  onClick={this.handleEditPicture}
-                  className="button"
-                >
-                  <EditIcon color="primary" />
-                </IconButton>
-              </Tooltip>
+              <MyButton
+                tip="Edit profile picture"
+                onclick={this.handleEditPicture}
+                btnClassname="button"
+              >
+                <EditIcon color="primary" />
+              </MyButton>
             </div>
             <hr />
             <div className="profile-details">
@@ -136,11 +140,16 @@ class Profile extends Component {
                     {' '}
                     {website}
                   </a>
+                  <hr />
                 </Fragment>
               )}
               <CalenderToday color="primary" />{' '}
               <span>joined {dayjs(createdAt).format('MMM YYYY')}</span>
             </div>
+            <MyButton tip="Logout" onclick={this.handleLogout}>
+              <KeyboardReturn color="primary" />
+            </MyButton>
+            <EditDetails />
           </div>
         </Paper>
       ) : (
