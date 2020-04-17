@@ -4,6 +4,7 @@ import {
   SET_UNAUTHENTICATED,
   LIKE_SCREAM,
   UNLIKE_SCREAM,
+  STOP_LOADING_UI,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -45,6 +46,11 @@ export default function (state = INITIAL_STATE, action) {
         likes: state.likes.filter(
           (like) => like.screamId !== action.payload.screamId
         ),
+      };
+    case STOP_LOADING_UI:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

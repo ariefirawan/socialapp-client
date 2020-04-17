@@ -27,7 +27,7 @@ export default {
       margin: '10px auto 10px auto',
     },
     textField: {
-      margin: '10px auto 10px auto',
+      margin: 'auto auto 10px auto',
     },
     button: {
       marginTop: 20,
@@ -41,5 +41,14 @@ export default {
     progress: {
       position: 'absolute',
     },
+    invisibleSeparator: {
+      border: 'none',
+      margin: 4,
+    },
+    visibleSeparator: {
+      width: '100%',
+      borderButtom: '1px solid rgba (0,0,0,0.1)',
+      marginButtom: 20
+    }
   },
 };
