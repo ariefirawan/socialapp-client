@@ -63,8 +63,11 @@ export default function (state = INITIAL_STATE, action) {
       };
     case SUBMIT_COMMENT:
       return {
-        ...state.scream,
-        comments: [...action.payload, ...state.scream.comments],
+        ...state,
+        scream: {
+          ...state.scream,
+          comments: [action.payload, ...state.scream.comments]
+        }
       };
     default:
       return state;

@@ -5,6 +5,7 @@ import {
   LIKE_SCREAM,
   UNLIKE_SCREAM,
   STOP_LOADING_UI,
+  MARK_NOTIFICATIONS_READ,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -51,6 +52,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         loading: false,
+      };
+    case MARK_NOTIFICATIONS_READ:
+      state.notifications.forEach((notif) => (notif.read = true));
+      return {
+        ...state,
       };
     default:
       return state;

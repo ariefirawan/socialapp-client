@@ -7,6 +7,7 @@ import {
   LOADING_UI,
   LOADING_USER,
   SET_UNAUTHENTICATED,
+  MARK_NOTIFICATIONS_READ,
 } from '../types';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -81,6 +82,15 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     .post('/user', userDetails)
     .then(() => {
       dispatch(getUserData());
+    })
+    .catch((err) => console.log(err));
+};
+
+export const notificationsRead = (notifId) => (dispatch) => {
+  axios
+    .post('/notifications', notifId)
+    .then((res) => {
+      dispatch({ type: MARK_NOTIFICATIONS_READ });
     })
     .catch((err) => console.log(err));
 };
