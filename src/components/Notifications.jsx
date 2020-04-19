@@ -80,7 +80,7 @@ class Notifications extends Component {
                 component={Link}
                 color="default"
                 variant="body1"
-                to={`/users/${notif.recepient}/scream/${notif.screamId}`}
+                to={`/users/${notif.recipient}/scream/${notif.screamId}`}
               >
                 {notif.sender} {verb} Your Scream {time}
               </Typography>
@@ -107,7 +107,7 @@ class Notifications extends Component {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
-          onEntered={this.handleOpened}
+          onEntered={this.onMenuOpened}
         >
           {notificationMarkup}
         </Menu>
